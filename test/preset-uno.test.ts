@@ -1,6 +1,7 @@
 import { createGenerator, escapeSelector } from '@unocss/core'
 import presetUno from '@unocss/preset-uno'
 import { expect, test } from 'vitest'
+import { twTargetDynamic, twTargetStatic } from './preset-uno-targets'
 
 const targets = [
   // custom colors
@@ -101,4 +102,34 @@ test('non-targets', async() => {
 
   expect(Array.from(matched)).toEqual([])
   expect(css).toBe('')
+})
+
+test('tw static', async() => {
+  const code = twTargetStatic.join(' ')
+  const { css } = await uno.generate(code)
+  const { css: css2 } = await uno.generate(code)
+
+  const unmatched = []
+  for (const i of twTargetStatic) {
+    if (!css.includes(escapeSelector(i)))
+      unmatched.push(i)
+  }
+  expect(unmatched).toEqual([])
+  expect(css).toMatchSnapshot()
+  expect(css).toEqual(css2)
+})
+
+test('tw dynamic', async() => {
+  const code = twTargetDynamic.join(' ')
+  const { css } = await uno.generate(code)
+  const { css: css2 } = await uno.generate(code)
+
+  const unmatched = []
+  for (const i of twTargetDynamic) {
+    if (!css.includes(escapeSelector(i)))
+      unmatched.push(i)
+  }
+  expect(unmatched).toEqual([])
+  expect(css).toMatchSnapshot()
+  expect(css).toEqual(css2)
 })
