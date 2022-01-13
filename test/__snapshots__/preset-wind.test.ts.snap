@@ -222,6 +222,9 @@ exports[`preset-wind > targets 1`] = `
 .dark .\\\\.dark\\\\:text-xl{font-size:1.25rem;line-height:1.75rem;}
 .capitalize{text-transform:capitalize;}
 .normal-case{text-transform:none;}
+.font-variations-wght\\\\2c slnt{font-variation-settings:\\"wght\\" var(--un-font-variation-wght),\\"slnt\\" var(--un-font-variation-slnt);}
+.font-variation-slnt--5{--un-font-variation-slnt:-5;}
+.font-variation-wght-500{--un-font-variation-wght:500;}
 .lining-nums,
 .tabular-nums{--un-ordinal:var(--un-empty,/*!*/ /*!*/);--un-slashed-zero:var(--un-empty,/*!*/ /*!*/);--un-numeric-figure:var(--un-empty,/*!*/ /*!*/);--un-numeric-spacing:var(--un-empty,/*!*/ /*!*/);--un-numeric-fraction:var(--un-empty,/*!*/ /*!*/);--un-font-variant-numeric:var(--un-ordinal) var(--un-slashed-zero) var(--un-numeric-figure) var(--un-numeric-spacing) var(--un-numeric-fraction);}
 .lining-nums{--un-numeric-figure:lining-nums;font-variant-numeric:var(--un-font-variant-numeric);}

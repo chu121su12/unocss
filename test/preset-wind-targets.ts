@@ -273,6 +273,9 @@ export const presetWindiTargets: string[] = [
   'touch-none',
 
   // typography
+  'font-variations-wght,slnt',
+  'font-variation-wght-500',
+  'font-variation-slnt--5',
   'lining-nums',
   'normal-nums',
   'tabular-nums',

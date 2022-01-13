@@ -64,7 +64,7 @@ import { animations } from './animation'
 import { cssVariables } from './variables'
 import { divides } from './divide'
 import { lineClamps } from './line-clamp'
-import { fontVariantNumeric } from './typography'
+import { fontVariantNumeric, fontVariationSettings } from './typography'
 import { touchActions } from './touch-actions'
 import { scrolls } from './scrolls'
 import { columns } from './columns'
@@ -127,6 +127,7 @@ export const rules: Rule[] = [
   fonts,
   textTransforms,
   fontStyles,
+  fontVariationSettings,
   fontVariantNumeric,
   textColors,
   textDecorations,

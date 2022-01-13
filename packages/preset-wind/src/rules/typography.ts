@@ -1,6 +1,7 @@
 import type { Rule } from '@unocss/core'
 import { CONTROL_SHORTCUT_NO_MERGE } from '@unocss/core'
 import { varEmpty } from '@unocss/preset-mini/rules'
+import { handler as h } from '@unocss/preset-mini/utils'
 
 const fontVariantNumericBase = {
   '--un-ordinal': varEmpty,
@@ -30,4 +31,15 @@ export const fontVariantNumeric: Rule[] = [
   [/^diagonal-fractions$/, () => toEntries({ '--un-numeric-fraction': 'diagonal-fractions' })],
   [/^stacked-fractions$/, () => toEntries({ '--un-numeric-fraction': 'stacked-fractions' })],
   ['normal-nums', { 'font-variant-numeric': 'normal' }],
+]
+
+
+export const fontVariationSettings: Rule[] = [
+  [/^font-variations-([\w,]+)$/, ([, s]) => ({
+    'font-variation-settings': s.split(',')
+      .map(v => `${JSON.stringify(v)} var(--un-font-variation-${v})`)
+      .join(','),
+  })],
+  ['font-variations-normal', { 'font-variation-settings': 'normal' }],
+  [/^font-variation-([\w+]+)-(-?.+)$/, ([, n, d]) => ({ [`--un-font-variation-${n}`]: h.bracket.cssvar.number(d) })],
 ]
