@@ -1,5 +1,5 @@
 import { createNanoEvents } from '../utils/events'
-import type { CSSEntries, CSSObject, ExtractorContext, GenerateOptions, GenerateResult, ParsedUtil, PreflightContext, RawUtil, ResolvedConfig, Rule, RuleContext, RuleMeta, Shortcut, StringifiedUtil, UserConfig, UserConfigDefaults, UtilObject, Variant, VariantContext, VariantHandler, VariantMatchedResult } from '../types'
+import type { CSSEntries, CSSObject, ExtractorContext, GenerateOptions, GenerateResult, ParsedUtil, PreflightContext, PreparedUtil, RawUtil, ResolvedConfig, Rule, RuleContext, RuleMeta, Shortcut, StringifiedUtil, UserConfig, UserConfigDefaults, UtilObject, Variant, VariantContext, VariantHandler, VariantMatchedResult } from '../types'
 import { resolveConfig } from '../config'
 import { CONTROL_SHORTCUT_NO_MERGE, TwoKeyMap, e, entriesToCss, expandVariantGroup, isRawUtil, isStaticShortcut, noop, normalizeCSSEntries, normalizeCSSValues, notNull, uniq, warnOnce } from '../utils'
 import { version } from '../../package.json'
@@ -219,11 +219,19 @@ export class UnoGenerator {
         .sort((a, b) => ((this.parentOrders.get(a[0]) ?? 0) - (this.parentOrders.get(b[0]) ?? 0)) || a[0]?.localeCompare(b[0] || '') || 0)
         .map(([parent, items]) => {
           const size = items.length
-          const sorted = items
+          const sorted: PreparedUtil[] = items
             .filter(i => (i[4]?.layer || 'default') === layer)
             .sort((a, b) => a[0] - b[0] || (a[4]?.sort || 0) - (b[4]?.sort || 0) || a[1]?.localeCompare(b[1] || '') || 0)
-            .map(a => [a[1] ? applyScope(a[1], scope) : a[1], a[2], !!a[4]?.noMerge])
-            .map(a => [a[0] == null ? a[0] : [a[0]], a[1], a[2]]) as [string[] | undefined, string, boolean][]
+            .map(([, selector, body,, meta]) => {
+              const scopedSelector = selector ? applyScope(selector, scope) : selector
+              return [
+                scopedSelector == null
+                  ? scopedSelector
+                  : [scopedSelector],
+                body,
+                !!meta?.noMerge,
+              ]
+            })
           if (!sorted.length)
             return undefined
           const rules = sorted

@@ -597,6 +597,12 @@ export type StringifiedUtil = readonly [
   context: RuleContext | undefined,
 ]
 
+export type PreparedUtil = readonly [
+  selector: string[] | undefined,
+  body: string,
+  noMerge: boolean,
+]
+
 export interface UtilObject {
   selector: string
   entries: CSSEntries
