@@ -597,7 +597,7 @@ export type StringifiedUtil = readonly [
   context: RuleContext | undefined,
 ]
 
-export type PreparedRule = readonly [
+export type PreparedUtil = readonly [
   selector: string[] | undefined,
   body: string,
   noMerge: boolean,
