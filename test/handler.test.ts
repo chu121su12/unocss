@@ -29,4 +29,13 @@ describe('value handler', () => {
     expect(h.bracket('[var(--A_B)]')).eql('var(--A B)')
     expect(h.bracket('[var(--A\\_B)]')).eql('var(--A_B)')
   })
+
+  it('color bracket attempts to resolve color value', () => {
+    expect(h.bracket('[color:#f00]')).eql(undefined)
+    expect(h.bracketOfColor('[color:#f00]')).eql('rgba(255,0,0)')
+    expect(h.bracketOfColor('[color:rgb(var(--red)_10%)]')).eql('rgb(var(--red) 10%)')
+    expect(h.bracketOfColor('[color:rgb(var(--red)/50%)]')).eql('rgba(var(--red),50%)')
+    expect(h.bracketOfColor('[color:oklab(var(--red)_var(--maybe\\_op))]')).eql('oklab(var(--red) var(--maybe_op))')
+    expect(h.bracketOfColor('[color:oklab(var(--red)/var(--op))]')).eql('oklab(var(--red) / var(--op))')
+  })
 })

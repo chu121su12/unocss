@@ -1,4 +1,5 @@
 import { escapeSelector } from '@unocss/core'
+import { colorToString, parseCssColor } from '../colors'
 import { globalKeywords } from '../mappings'
 import { numberRE, numberWithUnitRE, unitOnlyRE } from './regex'
 
@@ -95,12 +96,15 @@ const bracketTypeRe = /^\[(color|length|position):/i
 function bracketWithType(str: string, type?: string) {
   if (str && str.startsWith('[') && str.endsWith(']')) {
     let base: string | undefined
+    let tryType
 
     const match = str.match(bracketTypeRe)
     if (!match)
       base = str.slice(1, -1)
-    else if (type && match[1] === type)
+    else if (type && match[1] === type) {
+      tryType = type
       base = str.slice(match[0].length, -1)
+    }
 
     if (!base)
       return
@@ -119,13 +123,22 @@ function bracketWithType(str: string, type?: string) {
     if (curly)
       return
 
-    return base
+    base = base
       .replace(/(url\(.*?\))/g, v => v.replace(/_/g, '\\_'))
       .replace(/([^\\])_/g, '$1 ')
       .replace(/\\_/g, '_')
       .replace(/(?:calc|clamp|max|min)\((.*)/g, (v) => {
         return v.replace(/(-?\d*\.?\d(?!\b-.+[,)](?![^+\-/*])\D)(?:%|[a-z]+)?|\))([+\-/*])/g, '$1 $2 ')
       })
+
+    if (tryType === 'color') {
+      const colorValue = parseCssColor(base)
+      if (colorValue != null) {
+        return colorToString(colorValue)
+      }
+    }
+
+    return base
   }
 }
 
