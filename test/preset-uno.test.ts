@@ -3,6 +3,10 @@ import presetUno from '@unocss/preset-uno'
 import { expect, test } from 'vitest'
 
 const targets = [
+  // lists
+  'lists-2-box-shadow',
+  'lists-3-background',
+
   // variants - mix
   'mix-tint-50-c-red-400',
   'mix-shade-50-c-red-400',

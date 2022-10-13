@@ -29,6 +29,8 @@ exports[`targets 1`] = `
 .hover\\\\:placeholder-op90:hover::placeholder,
 .placeholder-op90::placeholder{--un-placeholder-opacity:0.9;}
 .placeholder-opacity-10::placeholder{--un-placeholder-opacity:0.1;}
+.lists-2-box-shadow{--un-box-shadow-1: ;--un-box-shadow-2: ;box-shadow:var(--un-box-shadow-1), var(--un-box-shadow-2);}
+.lists-3-background{--un-background-1: ;--un-background-2: ;--un-background-3: ;background:var(--un-background-1), var(--un-background-2), var(--un-background-3);}
 @media (hover: none) and (pointer: coarse){
 .media-touch\\\\:p-4{padding:1rem;}
 }

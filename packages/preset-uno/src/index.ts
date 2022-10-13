@@ -3,6 +3,7 @@ import type { PresetMiniOptions, Theme } from '@unocss/preset-mini'
 import { rules, shortcuts, theme, variants } from '@unocss/preset-wind'
 import { preflights } from '@unocss/preset-mini'
 import { variantColorMix } from './variants/mix'
+import { listRule } from './rules/list'
 
 export type { Theme }
 
@@ -16,7 +17,10 @@ export const presetUno = (options: PresetUnoOptions = {}): Preset<Theme> => {
   return {
     name: '@unocss/preset-uno',
     theme,
-    rules,
+    rules: [
+      ...rules,
+      listRule,
+    ],
     shortcuts,
     variants: [
       ...variants(options),
