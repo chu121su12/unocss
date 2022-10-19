@@ -57,7 +57,9 @@ export function mergeDeep<T>(original: T, patch: DeepPartial<T>): T {
   const output = { ...o }
   if (isObject(o) && isObject(p)) {
     Object.keys(p).forEach((key) => {
-      if (((isObject(o[key]) && isObject(p[key])) || (Array.isArray(o[key]) && Array.isArray(p[key]))))
+      if (typeof p[key] === 'function')
+        output[key] = p[key](o[key])
+      else if ((isObject(o[key]) && isObject(p[key])) || (Array.isArray(o[key]) && Array.isArray(p[key])))
         output[key] = mergeDeep(o[key], p[key])
       else
         Object.assign(output, { [key]: p[key] })
