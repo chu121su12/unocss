@@ -216,7 +216,8 @@ export class UnoGenerator<Theme extends {} = {}> {
           const sorted: PreparedRule[] = items
             .filter(i => (i[4]?.layer || LAYER_DEFAULT) === layer)
             .sort((a, b) =>
-              a[0] - b[0] // rule index
+              (a[4]?.indexGroup || 0) - (b[4]?.indexGroup || 0) // for section sorting within single layer (mainly used for pseudo)
+              || a[0] - b[0] // rule index
               || (a[4]?.sort || 0) - (b[4]?.sort || 0) // sort context
               || a[5]?.currentSelector?.localeCompare(b[5]?.currentSelector ?? '') // shortcuts
               || a[1]?.localeCompare(b[1] || '') // selector
@@ -347,7 +348,7 @@ export class UnoGenerator<Theme extends {} = {}> {
           (input: VariantHandlerContext) => {
             const entries = v.body?.(input.entries) || input.entries
             const parents: [string | undefined, number | undefined] = Array.isArray(v.parent) ? v.parent : [v.parent, undefined]
-            return (v.handle ?? defaultVariantHandler)({
+            const result = (v.handle ?? defaultVariantHandler)({
               ...input,
               entries,
               selector: v.selector?.(input.selector, entries) || input.selector,
@@ -356,6 +357,10 @@ export class UnoGenerator<Theme extends {} = {}> {
               layer: v.layer || input.layer,
               sort: v.sort || input.sort,
             }, previous)
+            result.indexGroup = result.indexGroup == input.indexGroup
+              ? (result.indexGroup || 0)
+              : (result.indexGroup || 0) + (input.indexGroup || 0)
+            return result
           },
         (input: VariantHandlerContext) => input,
       )
@@ -382,6 +387,7 @@ export class UnoGenerator<Theme extends {} = {}> {
       layer: variantContextResult.layer,
       sort: variantContextResult.sort,
       noMerge: variantContextResult.noMerge,
+      indexGroup: variantContextResult.indexGroup || 0,
     }
 
     for (const p of this.config.postprocess)
@@ -489,7 +495,7 @@ export class UnoGenerator<Theme extends {} = {}> {
     if (isRawUtil(parsed))
       return [parsed[0], undefined, parsed[1], undefined, parsed[2], this.config.details ? context : undefined, undefined]
 
-    const { selector, entries, parent, layer: variantLayer, sort: variantSort, noMerge } = this.applyVariants(parsed)
+    const { selector, entries, parent, layer: variantLayer, sort: variantSort, noMerge, indexGroup } = this.applyVariants(parsed)
     const body = entriesToCss(entries)
 
     if (!body)
@@ -500,6 +506,7 @@ export class UnoGenerator<Theme extends {} = {}> {
       ...meta,
       layer: variantLayer ?? metaLayer,
       sort: variantSort ?? metaSort,
+      indexGroup,
     }
     return [parsed[0], selector, body, parent, ruleMeta, this.config.details ? context : undefined, noMerge]
   }

@@ -142,6 +142,11 @@ export interface RuleMeta {
   layer?: string
 
   /**
+   * Fine tune sort
+   */
+  indexGroup?: number
+
+  /**
    * Option to not merge this selector even if the body are the same.
    * @default false
    */
@@ -233,6 +238,10 @@ export interface VariantHandlerContext {
    * @default false
    */
   noMerge?: boolean
+  /**
+   * @default false
+   */
+  indexGroup?: number
 }
 
 export interface VariantHandler {
@@ -726,6 +735,7 @@ export interface CliEntryItem {
 }
 
 export interface UtilObject {
+  indexGroup: number
   selector: string
   entries: CSSEntries
   parent: string | undefined
