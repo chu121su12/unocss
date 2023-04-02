@@ -358,7 +358,7 @@ export class UnoGenerator<Theme extends {} = {}> {
               sort: v.sort || input.sort,
             }, previous)
             result.indexGroup = result.indexGroup == input.indexGroup
-              ? (result.indexGroup || 0)
+              ? (result.indexGroup || 0) // try to maintain the value so it may still be merged
               : (result.indexGroup || 0) + (input.indexGroup || 0)
             return result
           },

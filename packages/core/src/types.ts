@@ -752,13 +752,13 @@ export interface GenerateOptions {
 
   /**
    * Generate preflights (if defined)
-   *
    * @default true
    */
   preflights?: boolean
 
   /**
    * Includes safelist
+   * @default true
    */
   safelist?: boolean
 

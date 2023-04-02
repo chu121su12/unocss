@@ -142,7 +142,6 @@ exports[`preset-wind > targets 1`] = `
 .animate-\\\\$variable{animation:var(--variable);}
 .animate-pulse{animation:pulse 2s cubic-bezier(0.4,0,.6,1) infinite;}
 .animate-pulse-alt{animation:pulse-alt 1s ease-in-out infinite;}
-.hover\\\\:animate-bounce:hover{animation:bounce 1s linear infinite;}
 .animate-name-move{animation-name:move;}
 .animate-duration-\\\\$variable{animation-duration:var(--variable);}
 .animate-duration-100,
@@ -436,6 +435,7 @@ exports[`preset-wind > targets 1`] = `
 .backdrop-filter-none{-webkit-backdrop-filter:none;backdrop-filter:none;}
 .filter-unset{filter:unset;}
 .backdrop-filter-revert{-webkit-backdrop-filter:revert;backdrop-filter:revert;}
+.hover\\\\:animate-bounce:hover{animation:bounce 1s linear infinite;}
 .placeholder-inherit::placeholder{color:inherit;}
 .placeholder-red-400::placeholder{--un-placeholder-opacity:1;color:rgba(248,113,113,var(--un-placeholder-opacity));}
 @media (hover: hover) and (pointer: fine){

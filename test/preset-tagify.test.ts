@@ -58,9 +58,9 @@ describe('tagify', () => {
       /* layer: default */
       .p2{padding:0.5rem;}
       m-1{margin:0.25rem;}
+      text-green5\\\\:10{color:rgba(34,197,94,0.1);}
       hover\\\\:color-red:hover,
       text-red{--un-text-opacity:1;color:rgba(248,113,113,var(--un-text-opacity));}
-      text-green5\\\\:10{color:rgba(34,197,94,0.1);}
       flex{display:flex;}
       .h2{height:0.5rem;}
       custom-rule{background-color:pink;}"

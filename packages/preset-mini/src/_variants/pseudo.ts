@@ -17,10 +17,10 @@ const PseudoClasses: Record<string, string> = Object.fromEntries([
 
   // user action
   'hover',
-  'active',
   'focus-visible',
   'focus-within',
   'focus',
+  'active',
 
   // input
   'autofill',
@@ -78,12 +78,25 @@ const PseudoClassesStr = Object.entries(PseudoClasses).filter(([, pseudo]) => !p
 const PseudoClassesColonStr = Object.entries(PseudoClassesColon).filter(([, pseudo]) => !pseudo.startsWith('::')).map(([key]) => key).join('|')
 const PseudoClassFunctionsStr = PseudoClassFunctions.join('|')
 
-const pseudoModifier = (pseudo: string) => {
+const pseudoModifier = (base: number, pseudo: string) => {
+  if (pseudo === 'focus') {
+    return {
+      sort: 3,
+      noMerge: true,
+      indexGroup: base,
+    }
+  }
+
   if (pseudo === 'active') {
     return {
-      sort: 1,
+      sort: 6,
       noMerge: true,
+      indexGroup: base,
     }
+  }
+
+  return {
+    indexGroup: base,
   }
 }
 
@@ -156,7 +169,7 @@ const taggedPseudoClassMatcher = (tag: string, parent: string, combinator: strin
         handle: (input, next) => next({
           ...input,
           prefix: `${prefix}${combinator}${input.prefix}`.replace(rawRE, '$1$2:'),
-          ...pseudoModifier(pseudoName),
+          ...pseudoModifier(30, pseudoName),
         }),
       }
     },
@@ -204,7 +217,7 @@ export const variantPseudoClassesAndElements = (): VariantObject => {
             return next({
               ...input,
               ...selectors,
-              ...pseudoModifier(match[1]),
+              ...pseudoModifier(20, match[1]),
             })
           },
         }
@@ -232,6 +245,7 @@ export const variantPseudoClassFunctions = (): VariantObject => {
         return {
           matcher: input.slice(match[0].length),
           selector: s => `${s}:${fn}(${pseudo})`,
+          ...pseudoModifier(10, ''),
         }
       }
     },
