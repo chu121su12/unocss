@@ -118,7 +118,7 @@ export class UnoGenerator<Theme extends {} = {}> {
 
   async generate(
     input: string | Set<string> | string[],
-    options: GenerateOptions = {},
+    options?: GenerateOptions,
   ): Promise<GenerateResult> {
     const {
       id,
@@ -127,7 +127,7 @@ export class UnoGenerator<Theme extends {} = {}> {
       safelist = true,
       minify = false,
       noMerge = false,
-    } = options
+    } = options ?? this.config.generate ?? {}
 
     const tokens: Readonly<Set<string>> = isString(input)
       ? await this.applyExtractors(input, id)

@@ -653,8 +653,8 @@ export interface PluginOptions {
   extraContent?: ExtraContentOptions
 }
 
-export interface UserConfig<Theme extends {} = {}> extends ConfigBase<Theme>, UserOnlyOptions<Theme>, GeneratorOptions, PluginOptions, CliOptions {}
-export interface UserConfigDefaults<Theme extends {} = {}> extends ConfigBase<Theme>, UserOnlyOptions<Theme> {}
+export interface UserConfig<Theme extends {} = {}> extends ConfigBase<Theme>, UserOnlyOptions<Theme>, GeneratorOptions, PluginOptions, CliOptions, GenerateConfig {}
+export interface UserConfigDefaults<Theme extends {} = {}> extends ConfigBase<Theme>, UserOnlyOptions<Theme>, GenerateConfig {}
 
 export interface ResolvedConfig<Theme extends {} = {}> extends Omit<
 RequiredByKey<UserConfig<Theme>, 'mergeSelectors' | 'theme' | 'rules' | 'variants' | 'layers' | 'extractors' | 'blocklist' | 'safelist' | 'preflights' | 'sortLayers'>,
@@ -768,4 +768,8 @@ export interface GenerateOptions {
    * @experimental
    */
   scope?: string
+}
+
+export interface GenerateConfig {
+  generate?: GenerateOptions
 }
