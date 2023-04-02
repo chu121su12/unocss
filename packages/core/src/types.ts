@@ -759,6 +759,12 @@ export interface GenerateOptions {
   minify?: boolean
 
   /**
+   * Disable merging for similar css body
+   * @default false
+   */
+  noMerge?: boolean
+
+  /**
    * @experimental
    */
   scope?: string
