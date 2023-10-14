@@ -1,19 +1,28 @@
 import type { Variant } from '@unocss/core'
 import { getStringComponent } from '@unocss/rule-utils'
-import { CONTROL_MINI_NO_NEGATIVE } from '../utils'
-
-const numberRE = /[0-9.]+(?:[a-z]+|%)?/
+import { CONTROL_MINI_NO_NEGATIVE, cssMathFnRE } from '../utils'
+import { numberWithUnitRE } from '../_utils/handlers/regex'
 
 const ignoreProps = [
-  /opacity|color|flex/,
+  /\b(opacity|color|flex|backdrop-filter|^filter|transform)\b/,
 ]
 
-function negateFunctions(value: string) {
-  const match = value.match(/^(calc|clamp|max|min)\s*(\(.*)/)
+function negateMathFunction(value: string) {
+  const match = value.match(cssMathFnRE)
   if (match) {
     const [fnBody, rest] = getStringComponent(match[2], '(', ')', ' ') ?? []
     if (fnBody)
       return `calc(${match[1]}${fnBody} * -1)${rest ? ` ${rest}` : ''}`
+  }
+}
+
+const negateFunctionBodyRE = /\b(hue-rotate|translate[XYZ]|rotate[XYZ]|scale[XYZ]|skew[XY])\s*(\(.*)/
+function negateFunctionBody(value: string) {
+  const match = value.match(negateFunctionBodyRE)
+  if (match) {
+    const [fnBody, rest] = getStringComponent(match[2], '(', ')', ' ') ?? []
+    if (fnBody)
+      return `${match[1]}(calc(${fnBody} * -1))${rest ? ` ${rest}` : ''}`
   }
 }
 
@@ -35,13 +44,20 @@ export const variantNegative: Variant = {
             return
           if (ignoreProps.some(i => v[0].match(i)))
             return
-          const negated = negateFunctions(value)
-          if (negated) {
-            v[1] = negated
+          const negatedFn = negateMathFunction(value)
+          if (negatedFn) {
+            v[1] = negatedFn
             changed = true
+            return
           }
-          else if (numberRE.test(value)) {
-            v[1] = value.replace(numberRE, i => `-${i}`)
+          const negatedBody = negateFunctionBody(value)
+          if (negatedBody) {
+            v[1] = negatedBody
+            changed = true
+            return
+          }
+          if (numberWithUnitRE.test(value)) {
+            v[1] = value.replace(numberWithUnitRE, i => `-${i}`)
             changed = true
           }
         })
