@@ -408,47 +408,42 @@ export class UnoGenerator<Theme extends object = object> {
     variantHandlers = parsed[4],
     raw = parsed[1],
   ): UtilObject {
-    const handler = variantHandlers.slice()
-      .sort((a, b) => (a.order || 0) - (b.order || 0))
-      .reduceRight(
-        (previous, v) => (input: VariantHandlerContext) => {
-          const entries = v.body?.(input.entries) || input.entries
-          const parents: [string | undefined, number | undefined] = Array.isArray(v.parent) ? v.parent : [v.parent, undefined]
-          return (v.handle ?? defaultVariantHandler)({
-            ...input,
-            entries,
-            selector: v.selector?.(input.selector, entries) || input.selector,
-            parent: parents[0] || input.parent,
-            parentOrder: parents[1] || input.parentOrder,
-            layer: v.layer || input.layer,
-            sort: v.sort || input.sort,
-          }, previous)
-        },
-        (input: VariantHandlerContext) => input,
-      )
-
-    const variantContextResult = handler({
+    let loop: VariantHandlerContext = {
       prefix: '',
       selector: toEscapedSelector(raw),
       pseudo: '',
       entries: parsed[2],
-    })
+    }
 
-    const { parent, parentOrder } = variantContextResult
+    for (const handler of variantHandlers.slice().sort((a, b) => (a.order || 0) - (b.order || 0))) {
+      const entries = handler.body?.(loop.entries) || loop.entries
+      const parents: [string | undefined, number | undefined] = Array.isArray(handler.parent) ? handler.parent : [handler.parent, undefined]
+      loop = (handler.handle ?? defaultVariantHandler)({
+        ...loop,
+        entries,
+        selector: handler.selector?.(loop.selector, entries) || loop.selector,
+        parent: parents[0] || loop.parent,
+        parentOrder: parents[1] || loop.parentOrder,
+        layer: handler.layer || loop.layer,
+        sort: handler.sort || loop.sort,
+      }, next => next)
+    }
+
+    const { parent, parentOrder } = loop
     if (parent != null && parentOrder != null)
       this.parentOrders.set(parent, parentOrder)
 
     const obj: UtilObject = {
       selector: [
-        variantContextResult.prefix,
-        variantContextResult.selector,
-        variantContextResult.pseudo,
+        loop.prefix,
+        loop.selector,
+        loop.pseudo,
       ].join(''),
-      entries: variantContextResult.entries,
+      entries: loop.entries,
       parent,
-      layer: variantContextResult.layer,
-      sort: variantContextResult.sort,
-      noMerge: variantContextResult.noMerge,
+      layer: loop.layer,
+      sort: loop.sort,
+      noMerge: loop.noMerge,
     }
 
     for (const p of this.config.postprocess)
