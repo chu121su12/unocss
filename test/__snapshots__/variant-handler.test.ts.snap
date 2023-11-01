@@ -28,13 +28,6 @@ exports[`variants > selector section is merged in order 1`] = `
 .replaced::pseudo{name:bar;}"
 `;
 
-exports[`variants > variant can stack 1`] = `
-"/* layer: default */
-.append-one\\\\:append-two\\\\:append-three\\\\:foo > :append-three > :append-two > :append-one,
-.append-one\\\\:prepend-three\\\\:prepend-two\\\\:foo + :prepend-two + :prepend-three > :append-one,
-.prepend-one\\\\:prepend-two\\\\:prepend-three\\\\:foo + :prepend-three + :prepend-two + :prepend-one{name:bar;}"
-`;
-
 exports[`variants > variant context is propagated 1`] = `
 "/* layer: default */
 .foo{name:bar;}
