@@ -77,8 +77,8 @@ export function variantColorMix<Theme extends object>(): VariantObject<Theme> {
       if (m) {
         return {
           matcher: matcher.slice(m[0].length),
-          body: (body) => {
-            body.forEach((v) => {
+          handle: (input) => {
+            input.entries.forEach((v) => {
               if (v[1]) {
                 const color = parseCssColor(`${v[1]}`)
                 if (color) {
@@ -88,7 +88,7 @@ export function variantColorMix<Theme extends object>(): VariantObject<Theme> {
                 }
               }
             })
-            return body
+            return input
           },
         }
       }

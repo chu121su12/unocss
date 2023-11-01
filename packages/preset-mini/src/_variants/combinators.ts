@@ -27,7 +27,7 @@ function scopeMatcher(name: string, combinator: string): VariantObject {
 
       return {
         matcher: body[1],
-        selector: s => `${s}${combinator}${bracketValue}`,
+        handle: input => ({ ...input, selector: `${input.selector}${combinator}${bracketValue}` }),
       }
     },
     multiPass: true,

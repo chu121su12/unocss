@@ -25,9 +25,10 @@ export const variantNegative: Variant = {
 
     return {
       matcher: matcher.slice(1),
-      body: (body) => {
+      handle: (input) => {
+        const body = [...input.entries]
         if (body.find(v => v[0] === CONTROL_MINI_NO_NEGATIVE))
-          return
+          return input
         let changed = false
         body.forEach((v) => {
           const value = v[1]?.toString()
@@ -46,8 +47,8 @@ export const variantNegative: Variant = {
           }
         })
         if (changed)
-          return body
-        return []
+          input.entries = body
+        return input
       },
     }
   },

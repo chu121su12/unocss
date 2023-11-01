@@ -266,22 +266,32 @@ export interface VariantHandler {
   order?: number
   /**
    * Rewrite the output selector. Often be used to append pseudo classes or parents.
+   *
+   * @deprecated Use VariantHandlerContext::selector
    */
   selector?: (input: string, body: CSSEntries) => string | undefined
   /**
    * Rewrite the output css body. The input come in [key,value][] pairs.
+   *
+   * @deprecated Use VariantHandlerContext::entries
    */
   body?: (body: CSSEntries) => CSSEntries | undefined
   /**
    * Provide a parent selector(e.g. media query) to the output css.
+   *
+   * @deprecated Use VariantHandlerContext::parent and VariantHandlerContext::parentOrder
    */
   parent?: string | [string, number] | undefined
   /**
    * Order in which the variant is sorted within single rule.
+   *
+   * @deprecated Use VariantHandlerContext::parent and VariantHandlerContext::sort
    */
   sort?: number
   /**
    * Override layer to the output css.
+   *
+   * @deprecated Use VariantHandlerContext::parent and VariantHandlerContext::layer
    */
   layer?: string | undefined
 }

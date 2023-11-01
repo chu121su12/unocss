@@ -20,7 +20,7 @@ variants: [
     return {
       // slice `hover:` prefix and passed to the next variants and rules
       matcher: matcher.slice(6),
-      selector: s => `${s}:hover`,
+      handle: input => ({ ...input, selector: `${input.selector}:hover` }),
     }
   }
 ],

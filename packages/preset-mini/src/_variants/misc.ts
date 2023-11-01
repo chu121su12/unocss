@@ -11,7 +11,7 @@ export const variantSelector: Variant = {
       if (selector) {
         return {
           matcher: rest,
-          selector: () => selector,
+          handle: input => ({ ...input, selector }),
         }
       }
     }
@@ -65,7 +65,7 @@ export const variantScope: Variant = {
       if (scope) {
         return {
           matcher: rest,
-          selector: s => `${scope} $$ ${s}`,
+          handle: input => ({ ...input, selector: `${scope} $$ ${input.selector}` }),
         }
       }
     }

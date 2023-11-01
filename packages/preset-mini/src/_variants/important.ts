@@ -18,12 +18,12 @@ export function variantImportant(): VariantObject {
       if (base) {
         return {
           matcher: base,
-          body: (body) => {
-            body.forEach((v) => {
+          handle: (input) => {
+            input.entries.forEach((v) => {
               if (v[1])
                 v[1] += ' !important'
             })
-            return body
+            return input
           },
         }
       }

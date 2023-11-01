@@ -281,7 +281,7 @@ export function variantPseudoClassFunctions(): VariantObject {
         const pseudo = fnVal ? h.bracket(match[2]) : (PseudoClasses[match[2]] || PseudoClassesColon[match[2]] || `:${match[2]}`)
         return {
           matcher: input.slice(match[0].length),
-          selector: s => `${s}:${fn}(${pseudo})`,
+          handle: input => ({ ...input, selector: `${input.selector}:${fn}(${pseudo})` }),
         }
       }
     },
@@ -310,7 +310,7 @@ export const variantPartClasses: VariantObject = {
       const part = `part(${match[2]})`
       return {
         matcher: input.slice(match[1].length),
-        selector: s => `${s}::${part}`,
+        handle: input => ({ ...input, selector: `${input.selector}::${part}` }),
       }
     }
   },

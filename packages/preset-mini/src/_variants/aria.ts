@@ -12,7 +12,7 @@ export const variantAria: VariantObject = {
       if (aria) {
         return {
           matcher: rest,
-          selector: s => `${s}[aria-${aria}]`,
+          handle: input => ({ ...input, selector: `${input.selector}[aria-${aria}]` }),
         }
       }
     }

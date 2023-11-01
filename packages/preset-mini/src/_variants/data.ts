@@ -12,7 +12,7 @@ export const variantDataAttribute: VariantObject = {
       if (dataAttribute) {
         return {
           matcher: rest,
-          selector: s => `${s}[data-${dataAttribute}]`,
+          handle: input => ({ ...input, selector: `${input.selector}[data-${dataAttribute}]` }),
         }
       }
     }
