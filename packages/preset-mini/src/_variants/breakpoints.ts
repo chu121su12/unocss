@@ -44,7 +44,7 @@ export function variantBreakpoints(): VariantObject {
           order -= (idx + 1)
           return {
             matcher: m,
-            handle: (input, next) => next({
+            handle: input => ({
               ...input,
               parent: `${input.parent ? `${input.parent} $$ ` : ''}@media (max-width: ${calcMaxWidthBySize(size)})`,
               parentOrder: order,
@@ -58,7 +58,7 @@ export function variantBreakpoints(): VariantObject {
         if (isAtPrefix && idx < variantEntries.length - 1) {
           return {
             matcher: m,
-            handle: (input, next) => next({
+            handle: input => ({
               ...input,
               parent: `${input.parent ? `${input.parent} $$ ` : ''}@media (min-width: ${size}) and (max-width: ${calcMaxWidthBySize(variantEntries[idx + 1][1])})`,
               parentOrder: order,
@@ -68,7 +68,7 @@ export function variantBreakpoints(): VariantObject {
 
         return {
           matcher: m,
-          handle: (input, next) => next({
+          handle: input => ({
             ...input,
             parent: `${input.parent ? `${input.parent} $$ ` : ''}@media (min-width: ${size})`,
             parentOrder: order,

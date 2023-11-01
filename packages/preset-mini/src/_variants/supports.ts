@@ -16,7 +16,7 @@ export const variantSupports: VariantObject = {
       if (supports) {
         return {
           matcher: rest,
-          handle: (input, next) => next({
+          handle: input => ({
             ...input,
             parent: `${input.parent ? `${input.parent} $$ ` : ''}@supports ${supports}`,
           }),

@@ -18,7 +18,7 @@ export const variantCustomMedia: VariantObject = {
       if (media) {
         return {
           matcher: rest,
-          handle: (input, next) => next({
+          handle: input => ({
             ...input,
             parent: `${input.parent ? `${input.parent} $$ ` : ''}@media ${media}`,
           }),

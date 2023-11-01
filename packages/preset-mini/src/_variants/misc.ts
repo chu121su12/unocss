@@ -28,7 +28,7 @@ export const variantCssLayer: Variant = {
       if (layer) {
         return {
           matcher: rest,
-          handle: (input, next) => next({
+          handle: input => ({
             ...input,
             parent: `${input.parent ? `${input.parent} $$ ` : ''}@layer ${layer}`,
           }),
@@ -100,7 +100,7 @@ export const variantVariables: Variant = {
 
     return {
       matcher: newMatcher,
-      handle(input, next) {
+      handle(input) {
         const updates = useParent
           ? {
               parent: `${input.parent ? `${input.parent} $$ ` : ''}${variant}`,
@@ -108,10 +108,10 @@ export const variantVariables: Variant = {
           : {
               selector: variant.replace(/&/g, input.selector),
             }
-        return next({
+        return {
           ...input,
           ...updates,
-        })
+        }
       },
     }
   },

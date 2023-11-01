@@ -27,7 +27,7 @@ export const variantContainerQuery: VariantObject = {
         warnOnce('The container query variant is experimental and may not follow semver.')
         return {
           matcher: rest,
-          handle: (input, next) => next({
+          handle: input => ({
             ...input,
             parent: `${input.parent ? `${input.parent} $$ ` : ''}@container${label ? ` ${label} ` : ' '}${container}`,
           }),

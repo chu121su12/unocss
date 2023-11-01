@@ -15,7 +15,7 @@ describe('variants', () => {
             if (match) {
               return {
                 matcher: input.slice(match[0].length),
-                handle: (input, next) => next({
+                handle: input => ({
                   prefix: ':prefix > ',
                   selector: '.selector',
                   pseudo: '::pseudo',
@@ -76,7 +76,7 @@ describe('variants', () => {
             if (match) {
               return {
                 matcher: input.slice(match[0].length),
-                handle: (input, next) => next({
+                handle: input => ({
                   ...input,
                   pseudo: `${input.pseudo}::${match[2]}`,
                   noMerge: match[2] === 'c',
@@ -113,7 +113,7 @@ describe('variants', () => {
             if (match) {
               return {
                 matcher: input.slice(match[0].length),
-                handle: (input, next) => next({
+                handle: input => ({
                   ...input,
                   pseudo: `${input.pseudo}::${match[2]}`,
                   noMerge: match[2] === 'c',

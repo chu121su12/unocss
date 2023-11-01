@@ -183,7 +183,7 @@ function taggedPseudoClassMatcher(tag: string, parent: string, combinator: strin
 
       return {
         matcher,
-        handle: (input, next) => next({
+        handle: input => ({
           ...input,
           prefix: `${prefix}${combinator}${input.prefix}`.replace(rawRE, '$1$2:'),
           sort: PseudoClassesKeys.indexOf(pseudoName) ?? PseudoClassesColonKeys.indexOf(pseudoName),
@@ -238,7 +238,7 @@ export function variantPseudoClassesAndElements(): VariantObject {
 
         return {
           matcher: input.slice(match[0].length),
-          handle: (input, next) => {
+          handle(input) {
             const selectors = (pseudo.startsWith('::') && !excludedPseudo.includes(pseudo))
               ? {
                   pseudo: `${input.pseudo}${pseudo}`,
@@ -247,12 +247,12 @@ export function variantPseudoClassesAndElements(): VariantObject {
                   selector: `${input.selector}${pseudo}`,
                 }
 
-            return next({
+            return {
               ...input,
               ...selectors,
               sort: index,
               noMerge: true,
-            })
+            }
           },
         }
       }

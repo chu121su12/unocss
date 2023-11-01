@@ -14,7 +14,7 @@ export function variantMatcher(name: string, handler: (input: VariantHandlerCont
       if (match) {
         return {
           matcher: input.slice(match[0].length),
-          handle: (input, next) => next({
+          handle: input => ({
             ...input,
             ...handler(input),
           }),
@@ -37,7 +37,7 @@ export function variantParentMatcher(name: string, parent: string): VariantObjec
       if (match) {
         return {
           matcher: input.slice(match[0].length),
-          handle: (input, next) => next({
+          handle: input => ({
             ...input,
             parent: `${input.parent ? `${input.parent} $$ ` : ''}${parent}`,
           }),
