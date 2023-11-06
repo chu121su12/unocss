@@ -285,13 +285,13 @@ export interface VariantHandler {
   /**
    * Order in which the variant is sorted within single rule.
    *
-   * @deprecated Use VariantHandlerContext::parent and VariantHandlerContext::sort
+   * @deprecated Use VariantHandlerContext::sort
    */
   sort?: number
   /**
    * Override layer to the output css.
    *
-   * @deprecated Use VariantHandlerContext::parent and VariantHandlerContext::layer
+   * @deprecated Use VariantHandlerContext::layer
    */
   layer?: string | undefined
 }
