@@ -130,8 +130,12 @@ function handlerColorOrSize(match: RegExpMatchArray, ctx: RuleContext<Theme>): C
   return colorResolver('color', 'text', 'textColor')(match, ctx) as CSSObject | undefined
 }
 
-function handleText([, s = 'base']: string[], { theme }: RuleContext<Theme>): CSSObject {
-  const [size, leading] = splitShorthand(s, 'length')
+function handleText([, s = 'base']: string[], { theme }: RuleContext<Theme>): CSSObject | undefined {
+  const split = splitShorthand(s, 'length')
+  if (!split)
+    return
+
+  const [size, leading] = split
   const sizePairs = toArray(theme.fontSize?.[size]) as [string, string | CSSObject, string?]
   const lineHeight = leading ? handleThemeByKey(leading, theme, 'lineHeight') : undefined
 
