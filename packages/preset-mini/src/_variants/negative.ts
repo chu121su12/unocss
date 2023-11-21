@@ -1,6 +1,6 @@
 import type { Variant } from '@unocss/core'
 import { getStringComponent } from '@unocss/rule-utils'
-import { CONTROL_MINI_NO_NEGATIVE } from '../utils'
+import { CONTROL_MINI_NO_NEGATIVE, cssMathFnRE } from '../utils'
 
 const numberRE = /[0-9.]+(?:[a-z]+|%)?/
 
@@ -9,9 +9,9 @@ const ignoreProps = [
 ]
 
 function negateFunctions(value: string) {
-  const match = value.match(/^(calc|clamp|max|min)\s*(\(.*)/)
+  const match = value.match(cssMathFnRE)
   if (match) {
-    const [fnBody, rest] = getStringComponent(match[2], '(', ')', ' ') ?? []
+    const [fnBody, rest] = getStringComponent(`(${match[2]})${match[3]}`, '(', ')', ' ') ?? []
     if (fnBody)
       return `calc(${match[1]}${fnBody} * -1)${rest ? ` ${rest}` : ''}`
   }
