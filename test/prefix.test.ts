@@ -45,6 +45,16 @@ describe('prefix', () => {
     expect(css).toMatchSnapshot()
   })
 
+  it('special preset prefix', async () => {
+    const uno = createGenerator({
+      presets: [
+        presetUno({ prefix: '@-' }),
+      ],
+    })
+
+    expect((await uno.generate('@-uppercase @-color-red group-hover:@-bg-red', { preflights: false })).css).toMatchSnapshot()
+  })
+
   it('uses first truthy prefix', async () => {
     const uno = createGenerator({
       presets: [

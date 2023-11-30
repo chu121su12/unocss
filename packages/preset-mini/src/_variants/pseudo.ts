@@ -293,7 +293,7 @@ export function variantPseudoClassFunctions(): VariantObject {
 export function variantTaggedPseudoClasses(options: PresetMiniOptions = {}): VariantObject[] {
   const attributify = !!options?.attributifyPseudo
   let firstPrefix = options?.prefix ?? ''
-  firstPrefix = (Array.isArray(firstPrefix) ? firstPrefix : [firstPrefix]).filter(Boolean)[0] ?? ''
+  firstPrefix = escapeSelector((Array.isArray(firstPrefix) ? firstPrefix : [firstPrefix]).filter(Boolean)[0] ?? '')
   const tagWithPrefix = (tag: string, combinator: string) => taggedPseudoClassMatcher(tag, attributify ? `[${firstPrefix}${tag}=""]` : `.${firstPrefix}${tag}`, combinator)
 
   return [
