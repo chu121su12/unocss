@@ -45,35 +45,7 @@ The runtime does not come with preflights, if you want to have style resets, you
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@unocss/reset/tailwind.min.css">
 ```
 
-## Builds
-
-Several builds are available for different use cases.
-
-### Uno (default)
-
-With `@unocss/preset-uno` preset:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/@unocss/runtime/uno.global.js"></script>
-```
-
-### Attributify
-
-With `@unocss/preset-uno` and `@unocss/preset-attributify` presets:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/@unocss/runtime/attributify.global.js"></script>
-```
-
-### Mini
-
-With `@unocss/preset-mini` and `@unocss/preset-attributify` preset:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/@unocss/runtime/mini.global.js"></script>
-```
-
-### Core
+## Customizing
 
 If you need to mix and match presets, you can load only the core runtime and assign the presets manually. All the [official presets](/presets/#presets) from UnoCSS are available and must be loaded before initializing the core runtime.
 
