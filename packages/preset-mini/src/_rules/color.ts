@@ -21,7 +21,13 @@ export const bgColors: Rule[] = [
     if ((isSize(d) || bgPositionRE.test(d)) && h.bracketOfPosition(d) != null)
       return { 'background-position': h.bracketOfPosition(d)!.split(' ').map(e => h.position.fraction.auto.px.cssvar(e) ?? e).join(' ') }
     return colorResolver('background-color', 'bg', 'backgroundColor')(...args)
-  }],
+  }, { autocomplete: [
+    // bg url?
+    'bg-<num>',
+    'bg-<position>',
+    'bg-$colors',
+  ] }],
+
   [/^bg-op(?:acity)?-?(.+)$/, ([, opacity]) => ({ '--un-bg-opacity': h.bracket.percent.cssvar(opacity) }), { autocomplete: 'bg-(op|opacity)-<percent>' }],
 ]
 

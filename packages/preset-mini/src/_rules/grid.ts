@@ -43,11 +43,11 @@ export const grids: Rule<Theme>[] = [
   }, { autocomplete: ['grid-(row|col)-span-<num>', '(row|col)-span-<num>'] }],
 
   // starts & ends
-  [/^(?:grid-)?(row|col)-start-(.+)$/, ([, c, v]) => ({ [`grid-${rowCol(c)}-start`]: h.bracket.cssvar(v) ?? v })],
-  [/^(?:grid-)?(row|col)-end-(.+)$/, ([, c, v]) => ({ [`grid-${rowCol(c)}-end`]: h.bracket.cssvar(v) ?? v }), { autocomplete: ['grid-(row|col)-(start|end)-<num>'] }],
+  [/^(?:grid-)?(row|col)-start-(.+)$/, ([, c, v]) => ({ [`grid-${rowCol(c)}-start`]: h.bracket.cssvar(v) ?? v }), { autocomplete: ['grid-(row|col)-start-<num>', '(row|col)-start-<num>'] }],
+  [/^(?:grid-)?(row|col)-end-(.+)$/, ([, c, v]) => ({ [`grid-${rowCol(c)}-end`]: h.bracket.cssvar(v) ?? v }), { autocomplete: ['grid-(row|col)-end-<num>', '(row|col)-end-<num>'] }],
 
   // auto flows
-  [/^(?:grid-)?auto-(rows|cols)-(.+)$/, ([, c, v], { theme }) => ({ [`grid-auto-${rowCol(c)}`]: autoDirection(c, theme, v) }), { autocomplete: ['grid-auto-(rows|cols)-<num>'] }],
+  [/^(?:grid-)?auto-(rows|cols)-(.+)$/, ([, c, v], { theme }) => ({ [`grid-auto-${rowCol(c)}`]: autoDirection(c, theme, v) }), { autocomplete: ['grid-auto-(rows|cols)-<num>', 'auto-(rows|cols)-<num>'] }],
 
   // grid-auto-flow, auto-flow: uno
   // grid-flow: wind
@@ -58,8 +58,8 @@ export const grids: Rule<Theme>[] = [
   [/^grid-(rows|cols)-(.+)$/, ([, c, v], { theme }) => ({
     [`grid-template-${rowCol(c)}`]: theme[`gridTemplate${rowColTheme(c)}`]?.[v] ?? h.bracket.cssvar(v),
   })],
-  [/^grid-(rows|cols)-minmax-([\w.-]+)$/, ([, c, d]) => ({ [`grid-template-${rowCol(c)}`]: `repeat(auto-fill,minmax(${d},1fr))` })],
-  [/^grid-(rows|cols)-(\d+)$/, ([, c, d]) => ({ [`grid-template-${rowCol(c)}`]: `repeat(${d},minmax(0,1fr))` }), { autocomplete: ['grid-(rows|cols)-<num>', 'grid-(rows|cols)-none'] }],
+  [/^grid-(rows|cols)-minmax-([\w.-]+)$/, ([, c, d]) => ({ [`grid-template-${rowCol(c)}`]: `repeat(auto-fill,minmax(${d},1fr))` }), { autocomplete: 'grid-(rows|cols)-minmax-<num>' }],
+  [/^grid-(rows|cols)-(\d+)$/, ([, c, d]) => ({ [`grid-template-${rowCol(c)}`]: `repeat(${d},minmax(0,1fr))` }), { autocomplete: 'grid-(rows|cols)-<num>' }],
 
   // areas
   [/^grid-area(s)?-(.+)$/, ([, s, v]) => {

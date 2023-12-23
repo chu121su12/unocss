@@ -7,10 +7,10 @@ export const outline: Rule<Theme>[] = [
   [/^outline-(?:width-|size-)?(.+)$/, handleWidth, { autocomplete: 'outline-(width|size)-<num>' }],
 
   // color
-  [/^outline-(?:color-)?(.+)$/, handleColorOrWidth, { autocomplete: 'outline-$colors' }],
+  [/^outline-(?:color-)?(.+)$/, handleColorOrWidth, { autocomplete: ['outline-$colors', 'outline-color-$colors'] }],
 
   // offset
-  [/^outline-offset-(.+)$/, ([, d], { theme }) => ({ 'outline-offset': theme.lineWidth?.[d] ?? h.bracket.cssvar.global.px(d) }), { autocomplete: 'outline-(offset)-<num>' }],
+  [/^outline-offset-(.+)$/, ([, d], { theme }) => ({ 'outline-offset': theme.lineWidth?.[d] ?? h.bracket.cssvar.global.px(d) }), { autocomplete: 'outline-offset-<num>' }],
 
   // style
   ['outline', { 'outline-style': 'solid' }],

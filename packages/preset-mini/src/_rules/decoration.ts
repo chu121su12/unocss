@@ -5,7 +5,10 @@ import { colorResolver, globalKeywords, h, isCSSMathFn } from '../utils'
 const decorationStyles = ['solid', 'double', 'dotted', 'dashed', 'wavy', ...globalKeywords]
 
 export const textDecorations: Rule<Theme>[] = [
-  [/^(?:decoration-)?(underline|overline|line-through)$/, ([, s]) => ({ 'text-decoration-line': s }), { autocomplete: 'decoration-(underline|overline|line-through)' }],
+  [/^(?:decoration-)?(underline|overline|line-through)$/, ([, s]) => ({ 'text-decoration-line': s }), { autocomplete: [
+    '(underline|overline|line-through)',
+    'decoration-(underline|overline|line-through)',
+  ] }],
 
   // size
   [/^(?:underline|decoration)-(?:size-)?(.+)$/, handleWidth, { autocomplete: '(underline|decoration)-<num>' }],
@@ -16,7 +19,7 @@ export const textDecorations: Rule<Theme>[] = [
   [/^(?:underline|decoration)-op(?:acity)?-?(.+)$/, ([, opacity]) => ({ '--un-line-opacity': h.bracket.percent.cssvar(opacity) }), { autocomplete: '(underline|decoration)-(op|opacity)-<percent>' }],
 
   // offset
-  [/^(?:underline|decoration)-offset-(.+)$/, ([, s], { theme }) => ({ 'text-underline-offset': theme.lineWidth?.[s] ?? h.auto.bracket.cssvar.global.px(s) }), { autocomplete: '(underline|decoration)-(offset)-<num>' }],
+  [/^(?:underline|decoration)-offset-(.+)$/, ([, s], { theme }) => ({ 'text-underline-offset': theme.lineWidth?.[s] ?? h.auto.bracket.cssvar.global.px(s) }), { autocomplete: '(underline|decoration)-offset-<num>' }],
 
   // style
   ...decorationStyles.map(v => [`underline-${v}`, { 'text-decoration-style': v }] as Rule<Theme>),

@@ -5,9 +5,10 @@ import { cartesian } from './utils'
 
 export const shorthands: Record<string, string> = {
   directions: '(x|y|t|b|l|r|s|e)',
-  num: `(${[0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 24, 36].join('|')})`,
-  percent: `(${[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100].join('|')})`,
-  percentage: `(${['10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%'].join('|')})`,
+  logical: '(block|inline|bs|be|is|ie)',
+  num: '(0|1|2|3|4|5|6|8|10|12|24|36)',
+  percent: '(0|5|10|15|20|25|30|35|40|45|50|55|60|65|70|75|80|85|90|95|100)',
+  percentage: '(10%|20%|30%|40%|50%|60%|70%|80%|90%|100%',
 }
 
 export const ignoredThemeKeys = ['DEFAULT']

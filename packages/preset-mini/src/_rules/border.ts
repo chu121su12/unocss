@@ -7,21 +7,42 @@ export const borderStyles = ['solid', 'dashed', 'dotted', 'double', 'hidden', 'n
 
 export const borders: Rule[] = [
   // compound
-  [/^(?:border|b)()(?:-(.+))?$/, handlerBorderSize, { autocomplete: '(border|b)-<directions>' }],
+  [/^(?:border|b)()(?:-(.+))?$/, handlerBorderSize, { autocomplete: [
+    '(border|b)',
+    '(border|b)-<directions>',
+    '(border|b)-<directions>-<num>'
+    '(border|b)-<logical>',
+    '(border|b)-<logical>-<num>'
+    '(border|b)-<num>',
+  ] }],
   [/^(?:border|b)-([xy])(?:-(.+))?$/, handlerBorderSize],
   [/^(?:border|b)-([rltbse])(?:-(.+))?$/, handlerBorderSize],
   [/^(?:border|b)-(block|inline)(?:-(.+))?$/, handlerBorderSize],
   [/^(?:border|b)-([bi][se])(?:-(.+))?$/, handlerBorderSize],
 
   // size
-  [/^(?:border|b)-()(?:width|size)-(.+)$/, handlerBorderSize, { autocomplete: ['(border|b)-<num>', '(border|b)-<directions>-<num>'] }],
+  [/^(?:border|b)-()(?:width|size)-(.+)$/, handlerBorderSize, { autocomplete: [
+    '(border|b)-size-<directions>-<num>'
+    '(border|b)-size-<logical>-<num>'
+    '(border|b)-size-<num>',
+    '(border|b)-width-<directions>-<num>',
+    '(border|b)-width-<logical>-<num>',
+    '(border|b)-width-<num>',
+  ] }],
   [/^(?:border|b)-([xy])-(?:width|size)-(.+)$/, handlerBorderSize],
   [/^(?:border|b)-([rltbse])-(?:width|size)-(.+)$/, handlerBorderSize],
   [/^(?:border|b)-(block|inline)-(?:width|size)-(.+)$/, handlerBorderSize],
   [/^(?:border|b)-([bi][se])-(?:width|size)-(.+)$/, handlerBorderSize],
 
   // colors
-  [/^(?:border|b)-()(?:color-)?(.+)$/, handlerBorderColorOrSize, { autocomplete: ['(border|b)-$colors', '(border|b)-<directions>-$colors'] }],
+  [/^(?:border|b)-()(?:color-)?(.+)$/, handlerBorderColorOrSize, { autocomplete: [
+    '(border|b)-$colors',
+    '(border|b)-<directions>-$colors'
+    '(border|b)-<logical>-$colors'
+    '(border|b)-color-$colors',
+    '(border|b)-color-<directions>-$colors',
+    '(border|b)-color-<logical>-$colors',
+  ] }],
   [/^(?:border|b)-([xy])-(?:color-)?(.+)$/, handlerBorderColorOrSize],
   [/^(?:border|b)-([rltbse])-(?:color-)?(.+)$/, handlerBorderColorOrSize],
   [/^(?:border|b)-(block|inline)-(?:color-)?(.+)$/, handlerBorderColorOrSize],
@@ -35,14 +56,34 @@ export const borders: Rule[] = [
   [/^(?:border|b)-([bi][se])-op(?:acity)?-?(.+)$/, handlerBorderOpacity],
 
   // radius
-  [/^(?:border-|b-)?(?:rounded|rd)()(?:-(.+))?$/, handlerRounded, { autocomplete: ['(border|b)-(rounded|rd)', '(border|b)-(rounded|rd)-<num>', '(rounded|rd)', '(rounded|rd)-<num>'] }],
+  [/^(?:border-|b-)?(?:rounded|rd)()(?:-(.+))?$/, handlerRounded, { autocomplete: [
+    '(border|b)-(rounded|rd)',
+    '(border|b)-(rounded|rd)-<directions>',
+    '(border|b)-(rounded|rd)-<directions>-<num>',
+    '(border|b)-(rounded|rd)-<logical>',
+    '(border|b)-(rounded|rd)-<logical>-<num>',
+    '(border|b)-(rounded|rd)-<num>',
+    '(rounded|rd)',
+    '(rounded|rd)-<directions>',
+    '(rounded|rd)-<directions>-<num>',
+    '(rounded|rd)-<logical>',
+    '(rounded|rd)-<logical>-<num>',
+    '(rounded|rd)-<num>',
+  ] }],
   [/^(?:border-|b-)?(?:rounded|rd)-([rltbse])(?:-(.+))?$/, handlerRounded],
   [/^(?:border-|b-)?(?:rounded|rd)-([rltb]{2})(?:-(.+))?$/, handlerRounded],
   [/^(?:border-|b-)?(?:rounded|rd)-([bise][se])(?:-(.+))?$/, handlerRounded],
   [/^(?:border-|b-)?(?:rounded|rd)-([bi][se]-[bi][se])(?:-(.+))?$/, handlerRounded],
 
   // style
-  [/^(?:border|b)-(?:style-)?()(.+)$/, handlerBorderStyle, { autocomplete: ['(border|b)-style', `(border|b)-(${borderStyles.join('|')})`, '(border|b)-<directions>-style', `(border|b)-<directions>-(${borderStyles.join('|')})`, `(border|b)-<directions>-style-(${borderStyles.join('|')})`, `(border|b)-style-(${borderStyles.join('|')})`] }],
+  [/^(?:border|b)-(?:style-)?()(.+)$/, handlerBorderStyle, { autocomplete: [
+    `(border|b)-(${borderStyles.join('|')})`,
+    `(border|b)-<directions>-(${borderStyles.join('|')})`,
+    `(border|b)-<directions>-style-(${borderStyles.join('|')})`,
+    `(border|b)-<logical>-(${borderStyles.join('|')})`,
+    `(border|b)-<logical>-style-(${borderStyles.join('|')})`,
+    `(border|b)-style-(${borderStyles.join('|')})`,
+  ] }],
   [/^(?:border|b)-([xy])-(?:style-)?(.+)$/, handlerBorderStyle],
   [/^(?:border|b)-([rltbse])-(?:style-)?(.+)$/, handlerBorderStyle],
   [/^(?:border|b)-(block|inline)-(?:style-)?(.+)$/, handlerBorderStyle],

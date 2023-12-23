@@ -31,7 +31,7 @@ export const rings: Rule<Theme>[] = [
 
   // offset size
   ['ring-offset', { '--un-ring-offset-width': '1px' }],
-  [/^ring-offset-(?:width-|size-)?(.+)$/, ([, d], { theme }) => ({ '--un-ring-offset-width': theme.lineWidth?.[d] ?? h.bracket.cssvar.px(d) }), { autocomplete: 'ring-offset-(width|size)-$lineWidth' }],
+  [/^ring-offset-(?:width-|size-)?(.+)$/, ([, d], { theme }) => ({ '--un-ring-offset-width': theme.lineWidth?.[d] ?? h.bracket.cssvar.px(d) }), { autocomplete: ['ring-offset-$lineWidth', 'ring-offset-(width|size)-$lineWidth'] }],
 
   // colors
   [/^ring-(.+)$/, handleColorOrWidth, { autocomplete: 'ring-$colors' }],

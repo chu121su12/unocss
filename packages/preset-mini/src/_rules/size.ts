@@ -35,23 +35,22 @@ export const sizes: Rule<Theme>[] = [
   [/^(?:size-)?(min-|max-)?([wh])-?(.+)$/, ([, m, w, s], { theme }) => ({ [getPropName(m, w)]: getSizeValue(m, w, theme, s) })],
   [/^(?:size-)?(min-|max-)?(block|inline)-(.+)$/, ([, m, w, s], { theme }) => ({ [getPropName(m, w)]: getSizeValue(m, w, theme, s) }), {
     autocomplete: [
-      '(w|h)-$width|height|maxWidth|maxHeight|minWidth|minHeight|inlineSize|blockSize|maxInlineSize|maxBlockSize|minInlineSize|minBlockSize',
-      '(block|inline)-$width|height|maxWidth|maxHeight|minWidth|minHeight|inlineSize|blockSize|maxInlineSize|maxBlockSize|minInlineSize|minBlockSize',
-      '(max|min)-(w|h|block|inline)',
-      '(max|min)-(w|h|block|inline)-$width|height|maxWidth|maxHeight|minWidth|minHeight|inlineSize|blockSize|maxInlineSize|maxBlockSize|minInlineSize|minBlockSize',
+      '(size-max|size-min|max|min)-(w|h)-full',
+      '(size-max|size-min|max|min)-(w|h|block|inline)',
+      '(size-max|size-min|max|min)-(w|h|block|inline)-$width|height|maxWidth|maxHeight|minWidth|minHeight|inlineSize|blockSize|maxInlineSize|maxBlockSize|minInlineSize|minBlockSize',
       '(w|h)-full',
-      '(max|min)-(w|h)-full',
+      '(w|h|block|inline)-$width|height|maxWidth|maxHeight|minWidth|minHeight|inlineSize|blockSize|maxInlineSize|maxBlockSize|minInlineSize|minBlockSize',
     ],
   }],
   [/^(?:size-)?(min-|max-)?(h)-screen-(.+)$/, ([, m, h, p], context) => ({ [getPropName(m, h)]: handleBreakpoint(context, p, 'verticalBreakpoints') })],
   [/^(?:size-)?(min-|max-)?(w)-screen-(.+)$/, ([, m, w, p], context) => ({ [getPropName(m, w)]: handleBreakpoint(context, p) }), {
     autocomplete: [
+      '(size-max|size-min|max|min)-(w|h)-screen',
+      '(size-max|size-min|max|min)-h-screen-$verticalBreakpoints',
+      '(size-max|size-min|max|min)-w-screen-$breakpoints',
       '(w|h)-screen',
-      '(min|max)-(w|h)-screen',
       'h-screen-$verticalBreakpoints',
-      '(min|max)-h-screen-$verticalBreakpoints',
       'w-screen-$breakpoints',
-      '(min|max)-w-screen-$breakpoints',
     ],
   }],
 ]
@@ -75,5 +74,5 @@ function getAspectRatio(prop: string) {
 }
 
 export const aspectRatio: Rule[] = [
-  [/^(?:size-)?aspect-(?:ratio-)?(.+)$/, ([, d]: string[]) => ({ 'aspect-ratio': getAspectRatio(d) }), { autocomplete: ['aspect-(square|video|ratio)', 'aspect-ratio-(square|video)'] }],
+  [/^(?:size-)?aspect-(?:ratio-)?(.+)$/, ([, d]: string[]) => ({ 'aspect-ratio': getAspectRatio(d) }), { autocomplete: '(size-aspect-ratio|size-aspect|aspect-ratio)-(square|video)' }],
 ]
